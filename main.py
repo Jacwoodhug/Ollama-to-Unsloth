@@ -13,6 +13,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse, Response, StreamingResponse
 
 import translate
+from config import get_config_value, get_int_config_value
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -20,11 +21,11 @@ import translate
 
 load_dotenv()
 
-UNSLOTH_BASE_URL: str = os.getenv("UNSLOTH_BASE_URL", "http://localhost:8000")
-UNSLOTH_API_KEY: str = os.getenv("UNSLOTH_API_KEY", "")
-PROXY_HOST: str = os.getenv("PROXY_HOST", "0.0.0.0")
-PROXY_PORT: str = os.getenv("PROXY_PORT", "11434")
-MODEL_CONTEXT_LENGTH: int = int(os.getenv("MODEL_CONTEXT_LENGTH", "32768"))
+UNSLOTH_BASE_URL: str = get_config_value("UNSLOTH_BASE_URL", "http://localhost:8888")
+UNSLOTH_API_KEY: str = get_config_value("UNSLOTH_API_KEY", "")
+PROXY_HOST: str = get_config_value("PROXY_HOST", "0.0.0.0")
+PROXY_PORT: str = get_config_value("PROXY_PORT", "11434")
+MODEL_CONTEXT_LENGTH: int = get_int_config_value("MODEL_CONTEXT_LENGTH", 32768)
 
 
 # ---------------------------------------------------------------------------

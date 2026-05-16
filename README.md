@@ -25,6 +25,14 @@ A FastAPI proxy server that translates Ollama API requests to Unsloth's OpenAI-c
 
 ## Configuration
 
+You can configure the proxy using either a `.env` file or VS Code user settings. The proxy checks configuration in this priority order:
+
+1. **`.env` file** (highest priority)
+2. **VS Code user settings** (if `.env` is absent or values are missing)
+3. **Default values** (lowest priority)
+
+### Option 1: `.env` File
+
 Create a `.env` file in the project root:
 
 ```env
@@ -35,9 +43,51 @@ PROXY_PORT=11434
 MODEL_CONTEXT_LENGTH=65536
 ```
 
+### Option 2: VS Code User Settings
+
+If you prefer not to store sensitive information in a `.env` file, you can use VS Code user settings instead.
+
+#### Initialize VS Code Settings
+
+Run the initialization script to set up VS Code user settings:
+
+```bash
+python init_settings.py
+```
+
+Or double-click `init_settings.bat` on Windows.
+
+This will prompt you for your API key and context length, then save them to your VS Code user settings (`%APPDATA%\Code\User\settings.json` on Windows).
+
+#### Manual Configuration
+
+You can also manually edit your VS Code user settings (`Ctrl+,` → click the `{}` icon → "Open user settings") and add:
+
+```json
+{
+    "unsloth.apiKey": "your_api_key_here",
+    "unsloth.contextLength": 65536
+}
+```
+
+> **Note**: Only `UNSLOTH_API_KEY` and `MODEL_CONTEXT_LENGTH` support VS Code settings. Other settings (`UNSLOTH_BASE_URL`, `PROXY_HOST`, `PROXY_PORT`) must be configured via `.env`.
+
 ## Usage
 
 Run `run.bat` to start the proxy server. The server will be available at `http://localhost:11434`.
+
+## Initializing VS Code Settings
+
+To set up VS Code user settings for the first time, run:
+
+```bash
+python init_settings.py
+```
+
+This script will:
+- Create or update your VS Code user settings file
+- Save your Unsloth API key and context length
+- Store settings in `%APPDATA%\Code\User\settings.json` on Windows
 
 ## API Coverage
 
